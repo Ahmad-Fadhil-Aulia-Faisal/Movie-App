@@ -4,10 +4,10 @@ import { View, Text, StyleSheet, Button } from 'react-native'
 export default function MovieDetail({navigation}:any): JSX.Element {
     return (
         <View style={styles.container}>
-            <Text>Movie Page</Text>
+            <Text>Movie Detail Page</Text>
             <Button 
-            title='Pergi Ke Movie Detail'
-            onPress={()=>navigation.navigate('MovieDetail')}
+            title='Kembali'
+            onPress={()=>navigation.goBack()}
             />
         </View>
     )
