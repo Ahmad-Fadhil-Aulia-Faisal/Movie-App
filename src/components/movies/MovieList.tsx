@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import type { MovieListProps, Movie } from '../../types/app';
-import { API_ACCESS_TOKEN } from '@env';
-import MovieItem from '../../components/movies/MovieItem'; // Added import
+import MovieItem from '../../components/movies/MovieItem'; // Import komponen MovieItem
 
-// Added for different cover image sizes
 const coverImageSize = {
   backdrop: {
     width: 280,
@@ -16,42 +14,13 @@ const coverImageSize = {
   },
 };
 
-const MovieList = ({ title, path, coverType }: MovieListProps): JSX.Element => {
-  const [movies, setMovies] = useState<Movie[]>([]);
-
-  useEffect(() => {
-    getMovieList();
-  }, []);
-
-  const getMovieList = (): void => {
-    const url = `https://api.themoviedb.org/3/${path}`;
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${API_ACCESS_TOKEN}`,
-      },
-    };
-
-    fetch(url, options)
-      .then(async (response) => await response.json())
-      .then((response) => {
-        setMovies(response.results);
-      })
-      .catch((errorResponse) => {
-        console.log(errorResponse);
-      });
-  };
-
-  console.log(movies);
-
+const MovieList = ({ title, coverType, movies }: MovieListProps): JSX.Element => {
   return (
     <View>
       <View style={styles.header}>
         <View style={styles.purpleLabel}></View>
         <Text style={styles.title}>{title}</Text>
       </View>
-      {/* Added code below */}
       <FlatList
         style={{
           ...styles.movieList,

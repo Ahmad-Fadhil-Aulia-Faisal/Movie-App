@@ -4,6 +4,15 @@ export interface MovieListProps {
     coverType: 'poster' | 'backdrop'
   }
 
+  // types/app.ts
+export interface MovieListProps {
+  title: string;
+  path: string;
+  coverType: 'poster' | 'backdrop';
+  movies: any[]; // Tambahkan prop 'movies' di sini
+}
+
+
 export interface Movie {
     backdrop_path: string
     genres: { id: number; name: string }
