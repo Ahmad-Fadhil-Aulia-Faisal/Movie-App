@@ -3,11 +3,12 @@ import { View, Text, Button } from 'react-native'
 
 const MovieDetail = ({ navigation }: any): any => {
   const fetchData = (): void => {
-    // Gantilah dengan akses token Anda
-    const ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmOWQxZDQ1MWVkZTc3NTMwZjYwZDRhNjE0OTk2YzQwMCIsIm5iZiI6MTcxOTI5MTk3OC4xNDI3OSwic3ViIjoiNjY3YTQzNmVhMzI5YTgzODUzMDc4NThmIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.1GQUn_7WDAnqY_Det8rNutJ0Ak7GLKwEkIuxOYSgBYQ'
+    const ACCESS_TOKEN = process.env.EXPO_PUBLIC_API_ACCESS_TOKEN
+    const URL = process.env.EXPO_PUBLIC_API_URL
 
-    const url =
-      'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1'
+    if (ACCESS_TOKEN == null || URL == null) {
+      throw new Error('ENV not found')
+    }
 
     const options = {
       method: 'GET',
@@ -17,7 +18,7 @@ const MovieDetail = ({ navigation }: any): any => {
       },
     }
 
-    fetch(url, options)
+    fetch(URL, options)
       .then(async (response) => await response.json())
       .then((response) => {
         console.log(response)
