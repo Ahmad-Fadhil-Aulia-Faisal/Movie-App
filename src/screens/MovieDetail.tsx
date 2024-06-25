@@ -1,25 +1,24 @@
 import React from 'react'
 import { View, Text, Button } from 'react-native'
+import { API_URL, API_ACCESS_TOKEN } from '@env' // Ditambahkan
+
 
 const MovieDetail = ({ navigation }: any): any => {
   const fetchData = (): void => {
-    const ACCESS_TOKEN = process.env.EXPO_PUBLIC_API_ACCESS_TOKEN
-    const URL = process.env.EXPO_PUBLIC_API_URL
-
-    if (ACCESS_TOKEN == null || URL == null) {
+    if (API_URL == null || API_ACCESS_TOKEN.length == null) {
       throw new Error('ENV not found')
     }
 
-    const options = {
+   const options = {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${API_ACCESS_TOKEN}`,
       },
     }
 
-    fetch(URL, options)
-      .then(async (response) => await response.json())
+ fetch(API_URL, options)
+      .then((response) => response.json())
       .then((response) => {
         console.log(response)
       })
