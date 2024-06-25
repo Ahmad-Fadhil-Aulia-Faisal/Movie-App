@@ -1,22 +1,43 @@
 import React from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text, Button } from 'react-native'
 
-export default function MovieDetail({navigation}:any): JSX.Element {
-    return (
-        <View style={styles.container}>
-            <Text>Movie Detail Page</Text>
-            <Button 
-            title='Kembali'
-            onPress={()=>navigation.goBack()}
-            />
-        </View>
-    )
+const MovieDetail = ({ navigation }: any): any => {
+  const fetchData = (): void => {
+    // Gantilah dengan akses token Anda
+    const ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmOWQxZDQ1MWVkZTc3NTMwZjYwZDRhNjE0OTk2YzQwMCIsIm5iZiI6MTcxOTI5MTk3OC4xNDI3OSwic3ViIjoiNjY3YTQzNmVhMzI5YTgzODUzMDc4NThmIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.1GQUn_7WDAnqY_Det8rNutJ0Ak7GLKwEkIuxOYSgBYQ'
+
+    const url =
+      'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1'
+
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+      },
+    }
+
+    fetch(url, options)
+      .then(async (response) => await response.json())
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Movie Detail Page</Text>
+      <Button
+        title="Fetch Data"
+        onPress={() => {
+          fetchData()
+        }}
+      />
+    </View>
+  )
 }
-const styles = StyleSheet.create({
-    container: {
-        flex:1,
-        alignItems: 'center',
-        justifyContent: 'center'
 
-    },
-})
+export default MovieDetail
