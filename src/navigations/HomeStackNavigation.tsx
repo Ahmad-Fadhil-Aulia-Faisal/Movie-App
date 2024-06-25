@@ -8,7 +8,7 @@ const stack =createNativeStackNavigator()
 const HomeStackNavigator =() :JSX.Element => (
     <stack.Navigator initialRouteName="Home">
         <stack.Screen
-        name="Home"
+        name="HOME"
         component={Home}
         />
         <stack.Screen
