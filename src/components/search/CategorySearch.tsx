@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, FlatList, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { API_ACCESS_TOKEN } from '@env';
 
@@ -45,6 +45,8 @@ const CategorySearch = (): JSX.Element => {
   const handleSearchPress = (): void => {
     if (selectedGenre) {
       navigation.navigate('SearchResults', { genreId: selectedGenre });
+    } else {
+      console.log('No genre selected');
     }
   };
 
@@ -63,29 +65,37 @@ const CategorySearch = (): JSX.Element => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
-            style={{
-              ...styles.genreItem,
-              backgroundColor: selectedGenre === item.id ? '#8978A4' : '#C0B4D5',
-            }}
-            onPress={() => handleGenrePress(item.id)}
+          style={[
+            styles.genreItem,
+            { backgroundColor: selectedGenre === item.id ? '#8978A4' : '#C0B4D5' },
+          ]}
+          onPress={() => handleGenrePress(item.id)}
           >
             <Text style={styles.genreText}>{item.name}</Text>
           </TouchableOpacity>
         )}
         numColumns={2}
         columnWrapperStyle={styles.genreList}
-      />
-      <TouchableOpacity style={styles.searchButton} onPress={handleSearchPress}>
-        <Text style={styles.searchButtonText}>SEARCH</Text>
-      </TouchableOpacity>
+        contentContainerStyle={styles.genreListContainer}
+        
+        />
+      
+      {selectedGenre &&(
+        <View style={styles.footer}>
+          <TouchableOpacity style={styles.searchButton} onPress={handleSearchPress}>
+            <Text style={styles.searchButtonText}>SEARCH</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexDirection:'column',
     padding: 16,
+    backgroundColor: '#fff',
   },
   loadingContainer: {
     flex: 1,
@@ -94,7 +104,9 @@ const styles = StyleSheet.create({
   },
   genreList: {
     justifyContent: 'space-between',
-    marginBottom: 16,
+  },
+  genreListContainer: {
+    paddingBottom: 100, // Provide some bottom padding to ensure space for the button
   },
   genreItem: {
     flex: 1,
@@ -105,18 +117,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   genreText: {
-    color: 'white',
+    color: '#fff',
     fontSize: 16,
   },
+  footer: {
+    position: 'absolute',
+    bottom: 60,
+    left: 0,
+    right: 0,
+    paddingBottom: 16,
+    paddingTop:5,
+    backgroundColor:'#fff',
+    
+    borderColor: '#ccc',
+    alignItems: 'center',
+  },
   searchButton: {
-    marginTop: 16,
     backgroundColor: '#8978A4',
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
   },
   searchButtonText: {
-    color: 'white',
+    color: '#fff',
     fontSize: 18,
   },
 });

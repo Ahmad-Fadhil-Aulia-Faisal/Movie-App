@@ -42,9 +42,11 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   topBarContainer: {
+    marginTop:'10%',
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
+    marginBottom:10,
   },
   topBar: {
     alignItems: 'center',

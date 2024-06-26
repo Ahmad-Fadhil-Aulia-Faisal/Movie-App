@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { API_ACCESS_TOKEN } from '@env';
 
@@ -49,39 +49,73 @@ const SearchResults = (): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={movies}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.movieItem}
-            onPress={() => navigation.navigate('MovieDetail', { movieId: item.id })}
-          >
-            <Text style={styles.movieTitle}>{item.title}</Text>
-          </TouchableOpacity>
-        )}
-      />
+        <FlatList
+            data={movies}
+            renderItem={({ item }) => (
+                <TouchableOpacity
+                    style={styles.movieItem}
+                    onPress={() => {
+                        navigation.navigate('MovieDetail', { movieId: item.id });
+                    }}
+                >
+                    <ImageBackground
+                        source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
+                        style={styles.movieImage}
+                        imageStyle={{ borderRadius: 8 }}
+                    >
+                        <View style={styles.titleContainer}>
+                        <Text style={styles.ratingText}>⭐{item.vote_average}</Text>
+                            <Text style={styles.movieTitle}>{item.title}</Text>
+                            
+  
+                        </View>
+                    </ImageBackground>
+                </TouchableOpacity>
+            )}
+            keyExtractor={(item, index) => `${item.id}-${index}`} // Use a combination of id and index
+            showsVerticalScrollIndicator={false}
+            numColumns={3}
+        />
     </View>
   );
-};
-
-const styles = StyleSheet.create({
+  };
+  
+  const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 16,
+    marginTop: '10%',
+    padding: 8,
+    backgroundColor: '#fff',
   },
+  movieItem: {
+    flex: 1,
+    margin: 4,
+  },
+  movieImage: {
+    aspectRatio: 2 / 3, // Adjust the aspect ratio as needed
+    justifyContent: 'flex-end',
+  },
+  titleContainer: {
+    height:'30%',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    padding: 4,
+  },
+  movieTitle: {
+    fontSize: 12,
+    fontWeight:'bold',
+    color: '#fff',
+    textAlign: 'center',
+  },
+  ratingText: {
+    fontSize:10,
+    color: 'yellow',
+    marginTop: 5,
+    paddingBottom:2
+  },
+
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  movieItem: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  movieTitle: {
-    fontSize: 18,
   },
 });
 

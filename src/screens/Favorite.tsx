@@ -1,7 +1,8 @@
-import React, { useCallback, useState, } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { FontAwesome } from '@expo/vector-icons';
 import type { Movie } from '../types/app';
 
 const Favorite = (): JSX.Element => {
@@ -30,23 +31,35 @@ const Favorite = (): JSX.Element => {
         <View style={styles.container}>
             <FlatList
                 data={favorites}
-                renderItem={({ item, index }) => (
+                renderItem={({ item }) => (
                     <TouchableOpacity
+                        style={styles.movieItem}
                         onPress={() => {
                             navigation.navigate('MovieDetail', { id: item.id });
                         }}
                     >
-                        <View style={styles.movieItem}>
-                            <Image
-                                source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
-                                style={styles.movieImage}
-                            />
-                            <Text style={styles.movieTitle}>{item.title}</Text>
-                        </View>
+                        <ImageBackground
+                            source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
+                            style={styles.movieImage}
+                            imageStyle={{ borderRadius: 8 }}
+                        >
+                            <FontAwesome 
+                                        name={ 'heart'} 
+                                        size={20} 
+                                        color={ 'red'} 
+                                    />
+                            <View style={styles.titleContainer}>
+                            <Text style={styles.ratingText}>⭐{item.vote_average}</Text>
+                                <Text style={styles.movieTitle}>{item.title}</Text>
+                                
+
+                            </View>
+                        </ImageBackground>
                     </TouchableOpacity>
                 )}
                 keyExtractor={(item, index) => `${item.id}-${index}`} // Use a combination of id and index
                 showsVerticalScrollIndicator={false}
+                numColumns={3}
             />
         </View>
     );
@@ -54,34 +67,34 @@ const Favorite = (): JSX.Element => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop:'10%',
-        flex: 1,
-        padding: 16,
+        marginTop: '10%',
+        padding: 8,
         backgroundColor: '#fff',
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 16,
-    },
     movieItem: {
-        position: 'relative',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 16,
-        alignItems: 'stretch'
+        flex: 1,
+        margin: 4,
     },
     movieImage: {
-        width: '20%',
-        height: 100,
-        borderRadius: 8,
-        marginRight: 16,
+        aspectRatio: 2 / 3, // Adjust the aspect ratio as needed
+        justifyContent: 'flex-end',
+    },
+    titleContainer: {
+        height:'30%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        padding: 4,
     },
     movieTitle: {
-        position: 'absolute',
-        bottom: 8,
-        left: 8,
-        color:'white',
+        fontSize: 12,
+        fontWeight:'bold',
+        color: '#fff',
+        textAlign: 'center',
+    },
+    ratingText: {
+        fontSize:10,
+        color: 'yellow',
+        marginTop: 5,
+        paddingBottom:2
     },
 });
 

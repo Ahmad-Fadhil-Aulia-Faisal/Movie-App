@@ -45,7 +45,7 @@ const KeywordSearch = () => {
         <Button
           title="Search"
           onPress={handleSearch}
-          disabled={!keyword}
+          disabled={keyword === ""}
         />
       </View>
 
@@ -56,7 +56,7 @@ const KeywordSearch = () => {
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity
-              onPress={() => navigateToMovieDetail(item.id)}
+              onPress={() => { navigateToMovieDetail(item.id); }}
               style={styles.resultItem}
             >
               <Image
@@ -78,7 +78,7 @@ const KeywordSearch = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    borderRadius: 8,
     padding: 16,
     backgroundColor: '#fff',
   },
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   input: {
+    borderRadius: 8,
     flex: 1,
     height: 40,
     borderWidth: 1,
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   resultsContainer: {
-    flex: 1,
+    
   },
   resultsText: {
     fontSize: 18,
