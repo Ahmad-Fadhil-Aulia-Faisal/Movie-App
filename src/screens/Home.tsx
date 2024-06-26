@@ -46,6 +46,8 @@ const Home = (): JSX.Element => {
 
 const styles = StyleSheet.create({
     container: {
+        padding: 16,
+        flex: 1,
         marginTop: StatusBar.currentHeight ?? 32,
         alignItems: 'center',
         justifyContent: 'center',

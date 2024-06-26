@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator();
 const SearchStackNavigation = (): JSX.Element => (
   <Stack.Navigator initialRouteName="Search">
     <Stack.Screen
-      name="Search"
+      name="SEARCH"
       component={Search}
       options={{ headerShown: false }}
     />
