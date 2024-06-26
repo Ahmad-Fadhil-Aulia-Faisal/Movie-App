@@ -55,7 +55,7 @@ const SearchResults = (): JSX.Element => {
                 <TouchableOpacity
                     style={styles.movieItem}
                     onPress={() => {
-                        navigation.navigate('MovieDetail', { movieId: item.id });
+                        navigation.navigate('MovieDetail', { id: item.id });
                     }}
                 >
                     <ImageBackground
