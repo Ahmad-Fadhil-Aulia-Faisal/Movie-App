@@ -1,18 +1,17 @@
-// BottomTabNavigation.tsx
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
-import Favorite from '../screens/Favorite';
-import HomeStackNavigation from './HomeStackNavigation';
+import HomeStackNavigator from './HomeStackNavigation'; // Pastikan ini mengarah ke navigasi yang sesuai
 import SearchStackNavigation from './SearchStackNavigation';
+import FavoriteStackNavigation from './FavoriteStackNavigation';
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigation = () => (
+const BottomTabNavigator = (): JSX.Element => (
   <Tab.Navigator>
     <Tab.Screen
       name="Home"
-      component={HomeStackNavigation}
+      component={HomeStackNavigator}
       options={{
         tabBarIcon: ({ color }) => (
           <Feather name="home" size={28} color={color} />
@@ -32,7 +31,7 @@ const BottomTabNavigation = () => (
     />
     <Tab.Screen
       name="Favorite"
-      component={Favorite}
+      component={FavoriteStackNavigation}
       options={{
         tabBarIcon: ({ color }) => (
           <Feather name="heart" size={28} color={color} />
@@ -43,4 +42,4 @@ const BottomTabNavigation = () => (
   </Tab.Navigator>
 );
 
-export default BottomTabNavigation;
+export default BottomTabNavigator;
