@@ -1,18 +1,18 @@
-// HomeStackNavigation.tsx
+// SearchStackNavigation.tsx
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import Home from '../screens/Home';
+import Search from '../screens/Search';
 import MovieDetail from '../screens/MovieDetail';
 
 const Stack = createNativeStackNavigator();
 
-const HomeStackNavigator = () => (
-  <Stack.Navigator initialRouteName="Home">
+const SearchStackNavigation = () => (
+  <Stack.Navigator initialRouteName="Search">
     <Stack.Screen
-      name="Home"
-      component={Home}
+      name="Search"
+      component={Search}
       options={{ headerShown: false }}
     />
     <Stack.Screen
@@ -34,4 +34,4 @@ const HomeStackNavigator = () => (
   </Stack.Navigator>
 );
 
-export default HomeStackNavigator;
+export default SearchStackNavigation;

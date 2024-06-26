@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, FlatList, StyleSheet, Image } from 'react-native';
+import { View, TextInput, Button, FlatList, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
+import { useNavigation, StackActions } from '@react-navigation/native';
 
 const KeywordSearch = () => {
   const [keyword, setKeyword] = useState<string>('');
   const [searchResults, setSearchResults] = useState<any[]>([]); // State untuk menyimpan hasil pencarian
+  const navigation = useNavigation();
 
   const handleSearch = () => {
     if (!keyword) {
@@ -23,6 +25,11 @@ const KeywordSearch = () => {
         console.error('Error fetching data:', error);
         // Tambahkan penanganan kesalahan sesuai kebutuhan Anda
       });
+  };
+
+  const navigateToMovieDetail = (id: number) => {
+    console.log('Navigating to MovieDetail with ID:', id);
+    navigation.dispatch(StackActions.push('MovieDetail', { id }));
   };
 
   return (
@@ -48,17 +55,20 @@ const KeywordSearch = () => {
           data={searchResults}
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => (
-            <View style={styles.movieItem}>
+            <TouchableOpacity
+              onPress={() => navigateToMovieDetail(item.id)}
+              style={styles.resultItem}
+            >
               <Image
                 source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
                 style={styles.poster}
               />
-              <View style={styles.movieDetails}>
+              <View style={styles.resultDetails}>
                 <Text style={styles.movieTitle}>{item.title}</Text>
-                <Text style={styles.movieOverview}>{item.overview}</Text>
+                <Text style={styles.movieOverview} numberOfLines={2}>{item.overview}</Text>
                 <Text style={styles.movieReleaseDate}>Release Date: {item.release_date}</Text>
               </View>
-            </View>
+            </TouchableOpacity>
           )}
         />
       </View>
@@ -75,48 +85,45 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 16,
   },
   input: {
     flex: 1,
+    height: 40,
     borderWidth: 1,
     borderColor: '#ccc',
     paddingHorizontal: 10,
-    paddingVertical: 8,
     marginRight: 10,
-    borderRadius: 5,
   },
   resultsContainer: {
     flex: 1,
-    marginTop: 20,
   },
   resultsText: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  movieItem: {
+  resultItem: {
     flexDirection: 'row',
     marginBottom: 10,
-    alignItems: 'center',
   },
   poster: {
-    width: 100,
-    height: 150,
-    borderRadius: 5,
+    width: 80,
+    height: 120,
+    borderRadius: 8,
     marginRight: 10,
   },
-  movieDetails: {
+  resultDetails: {
     flex: 1,
   },
   movieTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: 4,
   },
   movieOverview: {
     fontSize: 14,
-    marginBottom: 5,
+    marginBottom: 4,
   },
   movieReleaseDate: {
     fontSize: 12,
