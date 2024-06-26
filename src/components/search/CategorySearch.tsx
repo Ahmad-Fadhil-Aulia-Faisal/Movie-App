@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, FlatList } from 'react-native';
-import { API_ACCESS_TOKEN } from '@env';
 import { useNavigation } from '@react-navigation/native';
+import { API_ACCESS_TOKEN } from '@env';
 
 interface Genre {
   id: number;
@@ -12,6 +12,7 @@ const CategorySearch = (): JSX.Element => {
   const [genres, setGenres] = useState<Genre[]>([]);
   const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const navigation = useNavigation();
 
   const fetchGenres = async (): Promise<void> => {
     try {
@@ -42,9 +43,9 @@ const CategorySearch = (): JSX.Element => {
   };
 
   const handleSearchPress = (): void => {
-    console.log('Selected Genre:', selectedGenre);
-    // Lakukan pemanggilan API di sini untuk mendapatkan film berdasarkan genre yang dipilih
-    // Navigasi ke layar hasil pencarian jika diperlukan
+    if (selectedGenre) {
+      navigation.navigate('SearchResults', { genreId: selectedGenre });
+    }
   };
 
   if (loading) {
