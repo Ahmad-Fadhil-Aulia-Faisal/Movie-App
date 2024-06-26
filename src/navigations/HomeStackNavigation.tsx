@@ -1,21 +1,28 @@
 import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Home from '../screens/Home';
 import MovieDetail from '../screens/MovieDetail';
 
-const stack =createNativeStackNavigator()
+const Stack = createNativeStackNavigator();
 
-const HomeStackNavigator =() :JSX.Element => (
-    <stack.Navigator initialRouteName="Home">
-        <stack.Screen
-        name="HOME"
-        component={Home}
-        />
-        <stack.Screen
-        name="MovieDetail"
-        component={MovieDetail}
-        />
-    </stack.Navigator>
-)
+type HomeStackParamList = {
+    HOME: undefined;
+    MovieDetail: { movieId: string }; // Define the parameter type for MovieDetail screen
+    // Add other screens here if needed
+};
 
-export default HomeStackNavigator
+
+const HomeStackNavigator = (): JSX.Element => (
+    <Stack.Navigator initialRouteName="HOME">
+        <Stack.Screen
+            name="HOME"
+            component={Home}
+        />
+        <Stack.Screen
+            name="MovieDetail"
+            component={MovieDetail}
+        />
+    </Stack.Navigator>
+);
+
+export default HomeStackNavigator;
